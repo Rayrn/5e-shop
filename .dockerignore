@@ -1,0 +1,14 @@
+*
+
+!/app/assets/
+!/app/bin/
+!/app/config/
+!/app/fixtures/
+!/app/public/
+!/app/src/
+!/app/templates/
+!/app/tests/
+!/app/.env
+!/app/composer.*
+!/app/symfony.lock
+!/docker/
