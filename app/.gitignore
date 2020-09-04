@@ -1,0 +1,43 @@
+###> symfony/framework-bundle ###
+/public/bundles
+/var
+/vendor
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+
+###> phpstorm ###
+.idea/
+
+### Code coverage ###
+build
+
+###> PHPCS ###
+.phpcs-cache
+
+### PHP Lint ###
+.phplint-cache
+
+### PHP Unit ###
+.phpunit.result.cache
+
+### Postman ###
+results
+output.txt
+tests/postman/environments/content-api-env.json
+
+### Env ###
+.env.local
+
+### Node ###
+node_modules/
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="PHP Mess Detector rules">
+    <rule ref="rulesets/cleancode.xml">
+        <!-- Mockery uses static -->
+        <exclude name="StaticAccess" />
+    </rule>
+
+    <rule ref="rulesets/codesize.xml">
+        <!--Tests have a lot of methods-->
+        <exclude name="TooManyFields" />
+        <exclude name="TooManyPublicMethods" />
+    </rule>
+
+    <rule ref="rulesets/controversial.xml"/>
+
+    <rule ref="rulesets/design.xml">
+        <!-- Test suites can require more dependencies because of Mockery and PHPUnit -->
+        <exclude name="CouplingBetweenObjects"/>
+    </rule>
+
+    <rule ref="rulesets/design.xml/CouplingBetweenObjects">
+        <properties>
+            <property name="maximum" value="20" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml"/>
+
+    <rule ref="rulesets/unusedcode.xml" />
+</ruleset>
