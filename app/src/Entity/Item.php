@@ -6,8 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"gear"="Gear", "armour"="Armour", "weapon"="Weapon"})
+ * @ORM\DiscriminatorMap({"item"="Item", "armour"="Armour", "weapon"="Weapon"})
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
  */
 class Item
