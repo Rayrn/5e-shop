@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+shop:
+    path: /shop
+    controller: App\Controller\Shop::getShop
