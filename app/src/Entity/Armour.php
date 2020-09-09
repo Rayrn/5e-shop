@@ -35,6 +35,11 @@ class Armour extends Item
     public ?int $maxDexterityModifier;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public ?int $minStrength;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     public bool $stealthDisadvantage = false;

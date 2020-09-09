@@ -1,0 +1,217 @@
+# Armour
+
+## Light
+Padded Armour:
+  itemType: armour
+  cost: 5
+  weight: 8
+  armourType: light
+  armourClassBase: 11
+  stealthDisadvantage: true
+Leather Armour:
+  itemType: armour
+  cost: 10
+  weight: 10
+  armourType: light
+  armourClassBase: 11
+Studded Leather Armour:
+  itemType: armour
+  cost: 45
+  weight: 13
+  armourType: light
+
+## Medium
+Hide Armour:
+  itemType: armour
+  cost: 10
+  weight: 12
+  armourType: medium
+  armourClassBase: 12
+  maxDexterityModifier: 2
+Chain Shirt:
+  itemType: armour
+  cost: 50
+  weight: 20
+  armourType: medium
+  armourClassBase: 13
+  maxDexterityModifier: 2
+Scale Mail:
+  itemType: armour
+  cost: 50
+  weight: 45
+  armourType: medium
+  armourClassBase: 14
+  maxDexterityModifier: 2
+  stealthDisadvantage: true
+Breastplate:
+  itemType: armour
+  cost: 400
+  weight: 20
+  armourType: medium
+  armourClassBase: 14
+  maxDexterityModifier: 2
+Half Plate:
+  itemType: armour
+  cost: 750
+  weight: 40
+  armourType: medium
+  armourClassBase: 15
+  maxDexterityModifier: 2
+  stealthDisadvantage: true
+
+## Heavy
+Ring Mail:
+  itemType: armour
+  cost: 30
+  weight: 40
+  armourType: heavy
+  armourClassBase: 14
+  maxDexterityModifier: 0
+  stealthDisadvantage: true
+Chain mail:
+  itemType: armour
+  cost: 75
+  weight: 55
+  armourType: heavy
+  armourClassBase: 16
+  maxDexterityModifier: 0
+  minStrength: 13
+  stealthDisadvantage: true
+Splint mail:
+  itemType: armour
+  cost: 200
+  weight: 60
+  armourType: heavy
+  armourClassBase: 17
+  maxDexterityModifier: 0
+  minStrength: 15
+  stealthDisadvantage: true
+Plate mail:
+  itemType: armour
+  cost: 1500
+  weight: 65
+  armourType: heavy
+  armourClassBase: 18
+  maxDexterityModifier: 0
+  minStrength: 15
+  stealthDisadvantage: true
+
+## Shields
+Shield:
+  itemType: armour
+  cost: 10
+  weight: 6
+  armourType: shield
+  armourClassBonus: 2
+
+# Weapons
+
+## Simple
+Club:
+  itemType: weapon
+  cost: 0.01
+  weight: 2
+  weaponType: simple
+  damageDiceType: 4
+  damageDiceNumber: 1
+  damageType: bludgeoning
+  light: true
+Dagger:
+  itemType: weapon
+  cost: 2
+  weight: 1
+  weaponType: simple
+  damageDiceType: 4
+  damageDiceNumber: 1
+  damageType: piercing
+  light: true
+  finnesse: true
+  thrown: true
+  shortRange: 20
+  longRange: 60
+Greatclub:
+  itemType: weapon
+  cost: 0.02
+  weight: 10
+  weaponType: simple
+  damageDiceType: 8
+  damageDiceNumber: 1
+  damageType: bludgeoning
+  twoHanded: true
+Handaxe:
+  itemType: weapon
+  cost: 0.01
+  weight: 2
+  weaponType: simple
+  damageDiceType: 6
+  damageDiceNumber: 1
+  damageType: slashing
+  light: true
+  thrown: true
+  shortRange: 20
+  longRange: 60
+Javelin:
+  itemType: weapon
+  cost: 0.05
+  weight: 2
+  weaponType: simple
+  damageDiceType: 6
+  damageDiceNumber: 1
+  damageType: piercing
+  thrown: true
+  shortRange: 30
+  longRange: 120
+Light Hammer:
+  itemType: weapon
+  cost: 2
+  weight: 2
+  weaponType: simple
+  damageDiceType: 4
+  damageDiceNumber: 1
+  damageType: bludgeoning
+  light: true
+  thrown: true
+  shortRange: 20
+  longRange: 60
+Mace:
+  itemType: weapon
+  cost: 5
+  weight: 4
+  weaponType: simple
+  damageDiceType: 6
+  damageDiceNumber: 1
+  damageType: bludgeoning
+Quaterstaff:
+  itemType: weapon
+  cost: 0.02
+  weight: 4
+  weaponType: simple
+  damageDiceType: 6
+  damageDiceNumber: 1
+  damageType: bludgeoning
+  versatile: true
+  versatileDamageDice: 8
+  versatileDamageDiceNumber: 1
+Sickle:
+  itemType: weapon
+  cost: 1
+  weight: 2
+  weaponType: simple
+  damageDiceType: 4
+  damageDiceNumber: 1
+  damageType: slashing
+  light: true
+Spear:
+  itemType: weapon
+  cost: 1
+  weight: 3
+  weaponType: simple
+  damageDiceType: 6
+  damageDiceNumber: 1
+  damageType: piercing
+  thrown: true
+  shortRange: 20
+  longRange: 60
+  versatile: true
+  versatileDamageDice: 8
+  versatileDamageDiceNumber: 1

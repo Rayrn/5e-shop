@@ -23,21 +23,6 @@ build
 
 ### Postman ###
 results
-output.txt
-tests/postman/environments/content-api-env.json
 
 ### Env ###
 .env.local
-
-### Node ###
-node_modules/
-
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
-
-###> squizlabs/php_codesniffer ###
-/.phpcs-cache
-/phpcs.xml
-###< squizlabs/php_codesniffer ###

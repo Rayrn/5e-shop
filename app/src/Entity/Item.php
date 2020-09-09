@@ -7,14 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"item"="Item", "armour"="Armour", "weapon"="Weapon"})
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
  */
 class Item
 {
-    public const ITEM_TYPE = ['other', 'armour', 'weapon'];
+    public const ITEM_TYPE = ['item', 'armour', 'weapon'];
     public const ITEM_LEVEL = ['poor', 'normal', 'superior', 'masterowork'];
 
     /**
@@ -42,9 +42,9 @@ class Item
     public string $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal")
      */
-    public int $cost;
+    public float $cost;
 
     /**
      * @ORM\Column(type="integer")
