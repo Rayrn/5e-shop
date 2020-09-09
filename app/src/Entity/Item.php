@@ -37,7 +37,7 @@ class Item
     public string $itemLevel = 'normal';
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     public string $name;
 

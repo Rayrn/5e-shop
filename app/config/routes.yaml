@@ -5,7 +5,3 @@
 shop:
     path: /shop
     controller: App\Controller\Shop::getShop
-
-listItems:
-    path: /listItems
-    controller: App\Controller\Shop::listItems
