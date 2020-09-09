@@ -41,13 +41,18 @@ class PersistItemsCommand extends Command
         $items = $this->configTransformer->listItems('assets/item-config.yaml');
 
         foreach ($items as $item) {
-            $exists = $this->itemRepository->findBy(['name' => $item->name]);
+            $exists = $this->itemRepository->findOneBy(['name' => $item->name]);
 
             if ($exists) {
-                continue;
+                foreach ($item as $key => $value) {
+                    $exists->$key = $value;
+                }
+
+                $this->entityManager->persist($exists);
+            } else {
+                $this->entityManager->persist($item);
             }
 
-            $this->entityManager->persist($item);
             $this->entityManager->flush();
         }
         
