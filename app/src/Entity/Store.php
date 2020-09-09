@@ -43,7 +43,7 @@ class Store
 
     public function listItems(): array
     {
-        return $this->items->getValue();
+        return $this->items->getValues();
     }
 
     public function addItem(Item $item): void

@@ -42,7 +42,7 @@ class Item
     public string $name;
 
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      */
     public float $cost;
 
