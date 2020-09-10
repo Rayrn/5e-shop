@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Item;
 use App\Entity\Store;
+use App\DataTransformer\ItemLevelTransformer;
 use App\Repository\ItemRepository;
 use App\Repository\StoreRepository;
 use App\ViewTransformer\StoreTransformer;
@@ -12,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StoreController
 {
+    private ItemLevelTransformer $itemLevelTransformer;
     private ItemRepository $itemRepository;
     private StoreRepository $storeRepository;
     private StoreTransformer $storeTransformer;
@@ -19,10 +22,12 @@ class StoreController
     public function __construct(
         ItemRepository $itemRepository,
         StoreRepository $storeRepository,
+        ItemLevelTransformer $itemLevelTransformer,
         StoreTransformer $storeTransformer
     ) {
         $this->itemRepository = $itemRepository;
         $this->storeRepository = $storeRepository;
+        $this->itemLevelTransformer = $itemLevelTransformer;
         $this->storeTransformer = $storeTransformer;
     }
 
@@ -60,10 +65,29 @@ class StoreController
             $item = $this->itemRepository->find($id);
 
             if ($item) {
-                $store->addItem($item);
+                $store->addItem($this->setItemLevel($item, 90, 100));
             }
         }
 
         return $store;
+    }
+
+    private function setItemLevel(Item $item, int $superiorThreshold, int $masterworkThreshold): Item
+    {
+        if ($item->itemType == 'item') {
+            return $item;
+        }
+
+        $dice = rand(1, 100);
+
+        if ($dice > $masterworkThreshold) {
+            return $this->itemLevelTransformer->makeMasterwork($item);
+        }
+
+        if ($dice > $superiorThreshold) {
+            return $this->itemLevelTransformer->makeSuperior($item);
+        }
+
+        return $item;
     }
 }

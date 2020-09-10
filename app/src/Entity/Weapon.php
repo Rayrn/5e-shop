@@ -38,6 +38,11 @@ class Weapon extends Item
     public string $damageType;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public ?int $damageBonus;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     public bool $ammuntion = false;

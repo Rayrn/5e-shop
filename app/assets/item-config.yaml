@@ -19,6 +19,7 @@ Studded Leather Armour:
   cost: 45
   weight: 13
   armourType: light
+  armourClassBase: 12
 
 ## Medium
 Hide Armour:
@@ -125,7 +126,7 @@ Dagger:
   damageDiceNumber: 1
   damageType: piercing
   light: true
-  finnesse: true
+  finesse: true
   thrown: true
   shortRange: 20
   longRange: 60

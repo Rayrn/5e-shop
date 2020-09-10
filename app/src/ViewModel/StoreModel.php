@@ -10,21 +10,21 @@ use JsonSerializable;
 class StoreModel implements JsonSerializable
 {
     public string $name;
-    private ArrayCollection $items;
+    private ArrayCollection $shop;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->shop = new ArrayCollection();
     }
 
     public function listItems(): array
     {
-        return $this->items->getValues();
+        return $this->shop->getValues();
     }
 
     public function addItem(ItemModel $item): void
     {
-        $this->items->add($item);
+        $this->shop->add($item);
     }
 
     public function asArray()
@@ -34,7 +34,7 @@ class StoreModel implements JsonSerializable
         ];
 
         foreach ($this->listItems() as $item) {
-            $store['items'][] = $item->asArray();
+            $store['shop'][] = $item->asArray();
         }
 
         return $store;

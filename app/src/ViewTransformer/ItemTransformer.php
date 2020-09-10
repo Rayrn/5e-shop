@@ -2,49 +2,41 @@
 
 namespace App\ViewTransformer;
 
+use App\Entity\Armour;
 use App\Entity\Item;
+use App\Entity\Weapon;
 use App\ViewModel\ItemModel;
 
 class ItemTransformer
 {
-    public function transform(Item $item): ItemModel
+    private ArmourTransformer $armourTransformer;
+    private WeaponTransformer $weaponTransformer;
+
+    public function __construct(ArmourTransformer $armourTransformer, WeaponTransformer $weaponTransformer)
     {
-        $itemModel = new ItemModel();
-
-        switch ($item->itemType) {
-            case 'armour':
-                $itemModel = $this->buildArmour($item, $itemModel);
-                break;
-            case 'weapon':
-                $itemModel = $this->buildWeapon($item, $itemModel);
-                break;
-            default:
-                $itemModel = $this->buildItem($item, $itemModel);
-                break;
-        }
-
-        return $itemModel;
+        $this->armourTransformer = $armourTransformer;
+        $this->weaponTransformer = $weaponTransformer;
     }
 
-    private function buildItem(Item $item, ItemModel $itemModel): ItemModel
+    public function transform(Item $item): ItemModel
     {
+        if ($item instanceof Armour) {
+            return $this->armourTransformer->transform($item, $this->buildItem($item));
+        }
+
+        if ($item instanceof Weapon) {
+            return $this->weaponTransformer->transform($item, $this->buildItem($item));
+        }
+
+        return $this->buildItem($item);
+    }
+
+    private function buildItem(Item $item): ItemModel
+    {
+        $itemModel = new ItemModel();
         $itemModel->name = $item->name;
         $itemModel->cost = $this->buildCostString($item->cost);
         $itemModel->weight = $item->weight . ' lb';
-
-        return $itemModel;
-    }
-
-    private function buildArmour(Item $item, ItemModel $itemModel): ItemModel
-    {
-        $itemModel = $this->buildItem($item, $itemModel);
-
-        return $itemModel;
-    }
-
-    private function buildWeapon(Item $item, ItemModel $itemModel): ItemModel
-    {
-        $itemModel = $this->buildItem($item, $itemModel);
 
         return $itemModel;
     }
@@ -54,15 +46,15 @@ class ItemTransformer
         $gp = (int) $cost;
         $sp = ($cost * 100) % 100;
 
-        $costString = '';
+        $pieces = [];
         if ($gp) {
-            $costString = "{$gp} gp";
+            $pieces[] = "{$gp} gp";
         }
 
         if ($sp) {
-            $costString .= " {$sp} sp";
+            $pieces[] = "{$sp} sp";
         }
 
-        return trim($costString);
+        return implode(' ', $pieces);
     }
 }

@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Item
 {
     public const ITEM_TYPE = ['item', 'armour', 'weapon'];
-    public const ITEM_LEVEL = ['poor', 'normal', 'superior', 'masterowork'];
+    public const ITEM_LEVEL = ['normal', 'superior', 'masterwork'];
 
     /**
      * @ORM\Id
