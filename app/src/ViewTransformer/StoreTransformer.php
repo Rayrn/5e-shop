@@ -17,6 +17,7 @@ class StoreTransformer
     public function transform(Store $store): StoreModel
     {
         $model = new StoreModel();
+        $model->id = $store->getId();
         $model->name = $store->name;
 
         foreach ($store->listItems() as $item) {

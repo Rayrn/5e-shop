@@ -12,4 +12,15 @@ class ItemRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Item::class);
     }
+
+    public function getMaxId(): int
+    {
+        $id = $this->createQueryBuilder('u')
+            ->select('MAX(e.id)')
+            ->from('App:Item', 'e')
+            ->getQuery()
+            ->getSingleResult();
+
+        return reset($id);
+    }
 }

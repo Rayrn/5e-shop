@@ -6,7 +6,6 @@ use App\Entity\Item;
 use App\Entity\Store;
 use App\DataTransformer\ItemLevelTransformer;
 use App\Repository\ItemRepository;
-use App\Repository\StoreRepository;
 use App\ViewTransformer\StoreTransformer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,33 +15,25 @@ class StoreController
 {
     private ItemLevelTransformer $itemLevelTransformer;
     private ItemRepository $itemRepository;
-    private StoreRepository $storeRepository;
     private StoreTransformer $storeTransformer;
 
     public function __construct(
         ItemRepository $itemRepository,
-        StoreRepository $storeRepository,
         ItemLevelTransformer $itemLevelTransformer,
         StoreTransformer $storeTransformer
     ) {
         $this->itemRepository = $itemRepository;
-        $this->storeRepository = $storeRepository;
         $this->itemLevelTransformer = $itemLevelTransformer;
         $this->storeTransformer = $storeTransformer;
     }
 
-    public function newStore(): Response
-    {
-        $store = $this->generateStore();
-
-        return $this->outputStore($store);
-    }
-
     public function getStore(Request $request): Response
     {
-        $id = $request->attributes->get('id');
+        $id = $request->attributes->get('id')
+            ? (int) $request->attributes->get('id')
+            : rand(1, 100000);
 
-        $store = $this->storeRepository->find($id);
+        $store = $this->generateStore($id);
 
         return $this->outputStore($store);
     }
@@ -56,16 +47,27 @@ class StoreController
         return new JsonResponse($this->storeTransformer->transform($store)->asArray());
     }
 
-    private function generateStore(): Store
+    private function generateStore(int $id): Store
     {
-        $store = new Store();
+        srand($id);
+
+        $store = new Store($id);
         $store->name = 'New store';
 
-        foreach (range(1, 30) as $id) {
-            $item = $this->itemRepository->find($id);
+        $superiorThreshold = rand(80, 90); // 1:5 to 1:10
+        $masterworkThreshold = rand(95, 99); // 1:20 to 1:100
+
+        $maxId = $this->itemRepository->getMaxId();
+
+        for ($i = 0; $i < rand(3, 40); $i++) {
+            $item = $this->itemRepository->find(rand(1, $maxId));
 
             if ($item) {
-                $store->addItem($this->setItemLevel($item, 90, 100));
+                if ($item->itemType !== 'item') {
+                    $item = $this->setItemLevel($item, $superiorThreshold, $masterworkThreshold);
+                }
+
+                $store->addItem($item);
             }
         }
 
@@ -74,10 +76,6 @@ class StoreController
 
     private function setItemLevel(Item $item, int $superiorThreshold, int $masterworkThreshold): Item
     {
-        if ($item->itemType == 'item') {
-            return $item;
-        }
-
         $dice = rand(1, 100);
 
         if ($dice > $masterworkThreshold) {

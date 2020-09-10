@@ -2,10 +2,6 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-newStore:
-    path: /shop
-    controller: App\Controller\StoreController::newStore
-
 getStore:
-    path: /shop/{id}
+    path: /shop/{id?}
     controller: App\Controller\StoreController::getStore

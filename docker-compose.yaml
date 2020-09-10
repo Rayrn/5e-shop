@@ -49,5 +49,13 @@ services:
             - 3306:3306
         volumes:
             - db_storage:/var/lib/mysql
+    node:
+        image: node:14
+        volumes:
+          - ./app:/app:rw,cached
+        ports:
+            - "8080:8080"
+        working_dir: /app
+        command: ["yarn", "dev-server", "--host=0.0.0.0"]
 volumes:
     db_storage: {}

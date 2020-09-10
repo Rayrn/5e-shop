@@ -11,8 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Store
 {
     /**
+     * @ORM\Column(type="string")
+     */
+    public string $name;
+
+    /**
      * @ORM\Id
-     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private int $id;
@@ -26,13 +30,9 @@ class Store
      */
     private ArrayCollection $items;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    public string $name;
-
-    public function __construct()
+    public function __construct(int $id)
     {
+        $this->id = $id;
         $this->items = new ArrayCollection();
     }
 

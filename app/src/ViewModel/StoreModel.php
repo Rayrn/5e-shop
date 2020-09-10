@@ -9,6 +9,7 @@ use JsonSerializable;
 
 class StoreModel implements JsonSerializable
 {
+    public string $id;
     public string $name;
     private ArrayCollection $shop;
 
@@ -30,6 +31,7 @@ class StoreModel implements JsonSerializable
     public function asArray()
     {
         $store = [
+            'id' => $this->id,
             'name' => $this->name
         ];
 
