@@ -1,7 +1,15 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
 getStore:
-    path: /shop/{id?}
+    path: /shop.{_format?}
     controller: App\Controller\StoreController::getStore
+    defaults:
+        _format: html
+    requirements:
+        _format:  html|json
+
+loadStore:
+    path: /shop/{id}.{_format}
+    controller: App\Controller\StoreController::getStore
+    defaults:
+        _format: html
+    requirements:
+        _format:  html|json

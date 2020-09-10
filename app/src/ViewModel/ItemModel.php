@@ -12,13 +12,13 @@ class ItemModel implements JsonSerializable
     public string $core;
     public string $notes = '';
 
-    public function asArray()
-    {
-        return array_filter((array) $this);
-    }
-
-    public function jsonSerialize()
+    public function jsonSerialize(): string
     {
         return json_encode($this->asArray());
+    }
+
+    public function asArray(): array
+    {
+        return array_filter((array) $this);
     }
 }

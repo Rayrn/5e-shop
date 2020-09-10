@@ -10,40 +10,19 @@ class ConfigTransformer
 {
     private const APP_ROOT = __DIR__ . '/../../';
 
-    private ArmourFactory $armourFactory;
-    private ItemFactory $itemfactory;
-    private Parser $yamlParser;
-    private WeaponFactory $weaponFactory;
+    private ItemFactoryInterface $itemFactory;
 
-    public function __construct(
-        Parser $yamlParser,
-        ItemFactory $itemfactory,
-        ArmourFactory $armourFactory,
-        WeaponFactory $weaponFactory
-    ) {
-        $this->armourFactory = $armourFactory;
-        $this->itemfactory = $itemfactory;
-        $this->weaponFactory = $weaponFactory;
-        $this->yamlParser = $yamlParser;
+    public function __construct(Parser $yamlParser, ItemFactoryInterface $itemFactory)
+    {
+        $this->itemFactory = $itemFactory;
     }
 
     public function listItems(string $fileLocation): Collection
     {
         $list = new ArrayCollection();
-        foreach ($this->loadItems($fileLocation) as $name => $config) {
-            $config['name'] = $name;
 
-            switch ($config['itemType']) {
-                case 'armour':
-                    $list->add($this->armourFactory->build($config));
-                    break;
-                case 'weapon':
-                    $list->add($this->weaponFactory->build($config));
-                    break;
-                default:
-                    $list->add($this->itemFactory->build($config));
-                    break;
-            }
+        foreach ($this->loadItems($fileLocation) as $config) {
+            $list->add($this->itemFactory->build($config));
         }
 
         return $list;
@@ -52,7 +31,13 @@ class ConfigTransformer
     private function loadItems(string $fileLocation): array
     {
         try {
-            return $this->yamlParser->parseFile(self::APP_ROOT . ltrim($fileLocation, '/'));
+            $data = $this->yamlParser->parseFile(self::APP_ROOT . ltrim($fileLocation, '/'));
+
+            foreach ($data as $key => $config) {
+                $config['name'] = $key;
+            }
+
+            return $data;
         } catch (Throwable $t) {
             // do something
         }

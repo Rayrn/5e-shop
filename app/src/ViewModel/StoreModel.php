@@ -28,7 +28,17 @@ class StoreModel implements JsonSerializable
         $this->shop->add($item);
     }
 
-    public function asArray()
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->asArray());
+    }
+
+    public function jsonSerialize(): string
+    {
+        return json_encode($this->asArray());
+    }
+
+    public function asArray(): array
     {
         $store = [
             'id' => $this->id,
@@ -40,15 +50,5 @@ class StoreModel implements JsonSerializable
         }
 
         return $store;
-    }
-
-    public function getIterator(): ArrayIterator
-    {
-        return new ArrayIterator($this->asArray());
-    }
-
-    public function jsonSerialize()
-    {
-        return json_encode($this->asArray());
     }
 }

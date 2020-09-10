@@ -16,10 +16,17 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-            - '../src/Tests/'
 
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
+    App\DataTransformer\ItemFactoryDelegate:
+        arguments:
+            - '@App\DataTransformer\ItemFactory\ArmourFactory'
+            - '@App\DataTransformer\ItemFactory\ItemFactory'
+            - '@App\DataTransformer\ItemFactory\WeaponFactory'
+
+    App\DataTransformer\ItemFactoryInterface: '@App\DataTransformer\ItemFactoryDelegate'
 
     Symfony\Component\Yaml\Parser: ~

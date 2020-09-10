@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JsonSerializable;
 
 /**
  * @ORM\Entity
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"item"="Item", "armour"="Armour", "weapon"="Weapon"})
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
  */
-class Item
+class Item implements JsonSerializable
 {
     public const ITEM_TYPE = ['item', 'armour', 'weapon'];
     public const ITEM_LEVEL = ['normal', 'superior', 'masterwork'];
@@ -54,5 +55,26 @@ class Item
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString(): string
+    {
+        return $this->jsonSerialize();
+    }
+
+    public function jsonSerialize()
+    {
+        return json_encode($this->asArray());
+    }
+
+    public function asArray()
+    {
+        $item = [];
+        foreach ($this as $key => $value) {
+            preg_match('/[\w]+/', $key, $matches);
+            $item[$matches[0]] = $value;
+        }
+
+        return array_filter($item);
     }
 }

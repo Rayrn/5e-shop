@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Item;
 use App\Entity\Store;
-use App\DataTransformer\ItemLevelTransformer;
+use App\DataTransformer\ItemFactoryInterface;
 use App\Repository\ItemRepository;
 use App\ViewTransformer\StoreTransformer;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,17 +13,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StoreController
 {
-    private ItemLevelTransformer $itemLevelTransformer;
+    private ItemFactoryInterface $itemFactory;
     private ItemRepository $itemRepository;
     private StoreTransformer $storeTransformer;
 
     public function __construct(
         ItemRepository $itemRepository,
-        ItemLevelTransformer $itemLevelTransformer,
+        ItemFactoryInterface $itemFactory,
         StoreTransformer $storeTransformer
     ) {
         $this->itemRepository = $itemRepository;
-        $this->itemLevelTransformer = $itemLevelTransformer;
+        $this->itemFactory = $itemFactory;
         $this->storeTransformer = $storeTransformer;
     }
 
@@ -33,12 +33,12 @@ class StoreController
             ? (int) $request->attributes->get('id')
             : rand(1, 100000);
 
-        $store = $this->generateStore($id);
+        $format = $request->attributes->get('_format');
 
-        return $this->outputStore($store);
+        return $this->outputStore($this->generateStore($id), $format);
     }
 
-    public function outputStore(?Store $store): Response
+    private function outputStore(?Store $store): Response
     {
         if (!$store) {
             return new JsonResponse(['message' => 'Store missing or failed to load'], 404);
@@ -63,27 +63,25 @@ class StoreController
             $item = $this->itemRepository->find(rand(1, $maxId));
 
             if ($item) {
-                if ($item->itemType !== 'item') {
-                    $item = $this->setItemLevel($item, $superiorThreshold, $masterworkThreshold);
-                }
-
-                $store->addItem($item);
+                $store->addItem(
+                    $this->upgradeItem($item, $superiorThreshold, $masterworkThreshold)
+                );
             }
         }
 
         return $store;
     }
 
-    private function setItemLevel(Item $item, int $superiorThreshold, int $masterworkThreshold): Item
+    private function upgradeItem(Item $item, int $superiorThreshold, int $masterworkThreshold): Item
     {
         $dice = rand(1, 100);
-
-        if ($dice > $masterworkThreshold) {
-            return $this->itemLevelTransformer->makeMasterwork($item);
+        if ($dice > $superiorThreshold) {
+            $item = $this->itemFactory->upgrade($item);
         }
 
-        if ($dice > $superiorThreshold) {
-            return $this->itemLevelTransformer->makeSuperior($item);
+        $dice = rand(1, 100);
+        if ($dice > $masterworkThreshold) {
+            $item = $this->itemFactory->upgrade($item);
         }
 
         return $item;
