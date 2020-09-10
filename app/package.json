@@ -1,7 +1,11 @@
 {
+  "name": "wcp-load-test",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Jack Hansard",
+  "license": "ISC",
   "devDependencies": {
     "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
-    "webpack-dev-server": "^3.11.0"
+    "popper.js": "^1.16.1"
   }
 }

@@ -3,26 +3,18 @@
 /var
 /vendor
 
-###> symfony/web-server-bundle ###
-/.web-server-pid
+###> JS ###
+/node_modules
 
 ###> phpstorm ###
 .idea/
 
-### Code coverage ###
-build
-
-###> PHPCS ###
+### Tests ###
+/build
+/results
 .phpcs-cache
-
-### PHP Lint ###
 .phplint-cache
-
-### PHP Unit ###
 .phpunit.result.cache
-
-### Postman ###
-results
 
 ### Env ###
 .env.local

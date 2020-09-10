@@ -1,11 +1,5 @@
 ###> phpstorm ###
 .idea/
 
-### Fargate image definition generated on BUILD ###
-imagedefinitions.json
-
 ## Mac specific hidden folders
 .DS_Store
-
-### Node ###
-node_modules/
