@@ -3,11 +3,11 @@
 namespace App\ViewModel;
 
 use ArrayIterator;
+use App\Helper\JsonStringable;
 use Doctrine\Common\Collections\ArrayCollection;
 use IteratorAggregate;
-use JsonSerializable;
 
-class StoreModel implements JsonSerializable
+class StoreModel extends JsonStringable
 {
     public string $id;
     public string $name;
@@ -30,21 +30,18 @@ class StoreModel implements JsonSerializable
 
     public function getIterator(): ArrayIterator
     {
-        return new ArrayIterator($this->asArray());
+        return new ArrayIterator($this->shop->toArray());
     }
 
-    public function jsonSerialize(): string
-    {
-        return json_encode($this->asArray());
-    }
-
+    /**
+     * Overwrite as collections require some TLC to output correctly
+     */
     public function asArray(): array
     {
-        $store = [
-            'id' => $this->id,
-            'name' => $this->name
-        ];
+        $store['id'] = $this->id;
+        $store['name'] = $this->name;
 
+        $store['shop'] = [];
         foreach ($this->listItems() as $item) {
             $store['shop'][] = $item->asArray();
         }

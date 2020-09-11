@@ -2,23 +2,13 @@
 
 namespace App\ViewModel;
 
-use JsonSerializable;
+use App\Helper\JsonStringable;
 
-class ItemModel implements JsonSerializable
+class ItemModel extends JsonStringable
 {
     public string $name;
     public string $cost;
     public string $weight;
     public string $core;
     public string $notes = '';
-
-    public function jsonSerialize(): string
-    {
-        return json_encode($this->asArray());
-    }
-
-    public function asArray(): array
-    {
-        return array_filter((array) $this);
-    }
 }

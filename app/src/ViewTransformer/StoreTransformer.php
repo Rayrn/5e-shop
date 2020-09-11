@@ -4,6 +4,7 @@ namespace App\ViewTransformer;
 
 use App\Entity\Store;
 use App\ViewModel\StoreModel;
+use Doctrine\Common\Collections\Collection;
 
 class StoreTransformer
 {
@@ -14,13 +15,13 @@ class StoreTransformer
         $this->itemTransformer = $itemTransformer;
     }
 
-    public function transform(Store $store): StoreModel
+    public function transform(int $id, string $name, Collection $items): StoreModel
     {
         $model = new StoreModel();
-        $model->id = $store->getId();
-        $model->name = $store->name;
+        $model->id = $id;
+        $model->name = $name;
 
-        foreach ($store->listItems() as $item) {
+        foreach ($items as $item) {
             $model->addItem($this->itemTransformer->transform($item));
         }
 
