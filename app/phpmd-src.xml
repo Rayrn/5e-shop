@@ -4,6 +4,13 @@
     <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/controversial.xml"/>
     <rule ref="rulesets/design.xml" />
-    <rule ref="rulesets/naming.xml"/>
     <rule ref="rulesets/unusedcode.xml" />
+
+    <rule ref="rulesets/naming.xml">
+        <!--Fails for $id-->
+        <exclude name="ShortVariable" />
+
+        <!--Fails for $versatileDamageDiceNumber-->
+        <exclude name="LongVariable" />
+    </rule>
 </ruleset>

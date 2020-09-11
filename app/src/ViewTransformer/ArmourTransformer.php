@@ -26,8 +26,6 @@ class ArmourTransformer
 
     private function buildArmourString(?int $ac, ?int $acBonus, ?int $maxDex): string
     {
-        $armourString = '';
-
         if ($ac) {
             $armourString = 'AC ';
             $armourString .= ($ac + (int) $acBonus);
@@ -39,15 +37,16 @@ class ArmourTransformer
             if ($maxDex > 0) {
                 $armourString .= " (Max $maxDex)";
             }
-        } else {
-            $armourString = "+$acBonus AC";
+
+            return trim($armourString);
         }
 
-        return trim($armourString);
+        return "+$acBonus AC";
     }
 
     private function buildArmourNotes(string $armourType, ?int $minStrength, bool $stealthDisadvantage): string
     {
+        $pieces = [];
         $pieces[] = $armourType !== 'shield'
             ? ucfirst($armourType) . ' armour'
             : ucfirst($armourType);

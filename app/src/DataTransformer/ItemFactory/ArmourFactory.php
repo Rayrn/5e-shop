@@ -12,9 +12,9 @@ class ArmourFactory implements ItemFactoryInterface
     {
         $item = new Armour();
 
-        foreach (get_class_vars(Armour::class) as $key => $value) {
-            if (array_key_exists($key, $config)) {
-                $item->$key = $config[$key];
+        foreach ($config as $key => $value) {
+            if (property_exists(Armour::class, $key)) {
+                $item->$key = $value;
             }
         }
 

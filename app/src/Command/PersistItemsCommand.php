@@ -33,26 +33,30 @@ class PersistItemsCommand extends Command
     protected function configure()
     {
         $this->setDescription('Import items from yaml file.')
-            ->setHelp('This command allows you to import all items set up in assets/items-config.yaml into the database.');
+            ->setHelp('This command allows you to import items set up in assets/items-config.yaml into the database.');
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $items = $this->configTransformer->listItems('assets/item-config.yaml');
+        $items = $this->configTransformer->getItems('assets/item-config.yaml');
 
-        foreach ($items as $item) {
-            $exists = $this->itemRepository->findOneBy(['name' => $item->name]);
+        foreach ($items as $configItem) {
+            $dbItem = $this->itemRepository->findOneBy(['name' => $configItem->name]);
 
-            if ($exists) {
-                foreach ($item as $key => $value) {
-                    $exists->$key = $value;
+            if ($dbItem) {
+                foreach ($configItem as $key => $value) {
+                    $dbItem->$key = $value;
                 }
 
-                $this->entityManager->persist($exists);
-            } else {
-                $this->entityManager->persist($item);
+                $this->entityManager->persist($dbItem);
+                $this->entityManager->flush();
+                continue;
             }
 
+            $this->entityManager->persist($configItem);
             $this->entityManager->flush();
         }
         

@@ -8,7 +8,7 @@ use JsonSerializable;
 
 /**
  * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"item"="Item", "armour"="Armour", "weapon"="Weapon"})
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
@@ -70,7 +70,10 @@ class Item implements JsonSerializable
     public function asArray()
     {
         $item = [];
+
+        // Filter out * (private) and \u0000
         foreach ($this as $key => $value) {
+            $matches = [];
             preg_match('/[\w]+/', $key, $matches);
             $item[$matches[0]] = $value;
         }

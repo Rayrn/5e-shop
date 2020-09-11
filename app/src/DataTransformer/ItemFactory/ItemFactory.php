@@ -11,9 +11,9 @@ class ItemFactory implements ItemFactoryInterface
     {
         $item = new Item();
 
-        foreach (get_class_vars(Item::class) as $key => $value) {
-            if (array_key_exists($key, $config)) {
-                $item->$key = $config[$key];
+        foreach ($config as $key => $value) {
+            if (property_exists(Item::class, $key)) {
+                $item->$key = $value;
             }
         }
 

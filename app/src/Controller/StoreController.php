@@ -29,13 +29,13 @@ class StoreController
 
     public function getStore(Request $request): Response
     {
-        $id = $request->attributes->get('id')
+        $storeId = $request->attributes->get('id')
             ? (int) $request->attributes->get('id')
             : rand(1, 100000);
 
         $format = $request->attributes->get('_format');
 
-        return $this->outputStore($this->generateStore($id), $format);
+        return $this->outputStore($this->generateStore($storeId), $format);
     }
 
     private function outputStore(?Store $store): Response
@@ -47,11 +47,11 @@ class StoreController
         return new JsonResponse($this->storeTransformer->transform($store)->asArray());
     }
 
-    private function generateStore(int $id): Store
+    private function generateStore(int $storeId): Store
     {
-        srand($id);
+        srand($storeId);
 
-        $store = new Store($id);
+        $store = new Store($storeId);
         $store->name = 'New store';
 
         $superiorThreshold = rand(80, 90); // 1:5 to 1:10

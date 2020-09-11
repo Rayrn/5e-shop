@@ -12,9 +12,9 @@ class WeaponFactory implements ItemFactoryInterface
     {
         $item = new Weapon();
 
-        foreach (get_class_vars(Weapon::class) as $key => $value) {
-            if (array_key_exists($key, $config)) {
-                $item->$key = $config[$key];
+        foreach ($config as $key => $value) {
+            if (property_exists(Weapon::class, $key)) {
+                $item->$key = $value;
             }
         }
 

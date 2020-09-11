@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Weapon extends Item
 {
@@ -104,7 +105,6 @@ class Weapon extends Item
     public ?int $versatileDamageDice;
 
     /**
-     * @ORM\Column(type="boolean")
      * @ORM\Column(type="integer", nullable=true)
      */
     public ?int $versatileDamageDiceNumber;

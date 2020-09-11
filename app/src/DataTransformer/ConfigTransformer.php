@@ -15,9 +15,10 @@ class ConfigTransformer
     public function __construct(Parser $yamlParser, ItemFactoryInterface $itemFactory)
     {
         $this->itemFactory = $itemFactory;
+        $this->yamlParser = $yamlParser;
     }
 
-    public function listItems(string $fileLocation): Collection
+    public function getItems(string $fileLocation): Collection
     {
         $list = new ArrayCollection();
 
@@ -33,8 +34,8 @@ class ConfigTransformer
         try {
             $data = $this->yamlParser->parseFile(self::APP_ROOT . ltrim($fileLocation, '/'));
 
-            foreach ($data as $key => $config) {
-                $config['name'] = $key;
+            foreach (array_keys($data) as $key) {
+                $data[$key]['name'] = $key;
             }
 
             return $data;

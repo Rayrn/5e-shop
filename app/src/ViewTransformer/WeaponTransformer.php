@@ -61,6 +61,7 @@ class WeaponTransformer
 
     private function buildWeaponNotes(Weapon $weapon): string
     {
+        $pieces = [];
         $pieces[] = ucfirst($weapon->weaponType) . " weapon";
 
         foreach (self::PROPERTY_KEYS as $key => $value) {
